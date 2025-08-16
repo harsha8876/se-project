@@ -14,6 +14,7 @@ import {
   MapPin,
   Menu,
   X,
+  ChevronRight
 } from "lucide-react";
 import BlurText from "@/components/ui/BlurText";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
