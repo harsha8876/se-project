@@ -14,16 +14,36 @@ import {
   MapPin,
   Menu,
   X,
-  ChevronRight
+  ChevronRight,
 } from "lucide-react";
 import BlurText from "@/components/ui/BlurText";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import DarkVeil from "@/components/ui/DarkVeil";
+import Link from "next/link";
 import Searchbar from "@/components/Searchbar";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Define the services array
+  const services = [
+    {
+      title: "Car Buying Assistance",
+      description: "Get expert advice on buying your next car.",
+      features: ["Expert Guidance", "Best Deals", "Wide Selection"],
+    },
+    {
+      title: "Car Selling Assistance",
+      description: "Sell your car quickly and at the best price.",
+      features: ["Quick Process", "Fair Pricing", "Wide Reach"],
+    },
+    {
+      title: "Car Financing",
+      description: "Flexible financing options for your dream car.",
+      features: ["Low Interest Rates", "Easy Approval", "Custom Plans"],
+    },
+  ];
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
 
@@ -45,22 +65,19 @@ export default function Home() {
                 href="#"
                 className="text-[#121212] hover:text-[#30475E] transition-colors font-medium"
               >
-                Buy Cars
+                Browse Cars
               </a>
               <a
                 href="#"
                 className="text-[#121212] hover:text-[#30475E] transition-colors font-medium"
               >
-                Sell Cars
+                About Us
               </a>
-              <a
-                href="#"
-                className="text-[#121212] hover:text-[#30475E] transition-colors font-medium"
-              >
+              <Link href="/finance" className="text-[#121212] hover:text-[#30475E] transition-colors font-medium">
                 Finance
-              </a>
+              </Link>
               <a
-                href="#"
+                href="#services"
                 className="text-[#121212] hover:text-[#30475E] transition-colors font-medium"
               >
                 Services
@@ -131,13 +148,13 @@ export default function Home() {
                 Finance
               </a>
               <a
-                href="#"
+                href="#services"
                 className="text-[#121212] hover:text-[#30475E] transition-colors font-medium text-lg py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Services
               </a>
-              
+
               <div className="flex flex-col space-y-4 pt-8 mt-8 border-t border-gray-200">
                 <SignInButton>
                   <button className="w-full text-[#30475E] hover:text-[#121212] transition-colors font-medium text-lg py-3 border border-[#30475E] rounded-lg">
@@ -192,6 +209,56 @@ export default function Home() {
             <Searchbar />
           </div>
         </div> 
+      </section>
+
+      {/* Services */}
+      <section className="py-16 bg-[#F5F5F5]" id="services">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#121212] mb-4">
+              Our Services
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Comprehensive automotive solutions to meet all your car buying and
+              selling needs.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300"
+              >
+                <h3 className="text-2xl font-bold text-[#121212] mb-4">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+                <ul className="space-y-3 mb-6">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center text-gray-700">
+                      <CheckCircle className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                {service.title === "Car Financing" ? (
+                  <Link href="/finance">
+                    <button className="w-full bg-[#30475E] text-white py-3 rounded-lg hover:bg-[#121212] transition-all duration-300 font-medium">
+                      Learn More
+                    </button>
+                  </Link>
+                ) : (
+                  <button className="w-full bg-[#30475E] text-white py-3 rounded-lg hover:bg-[#121212] transition-all duration-300 font-medium">
+                    Learn More
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
     </div>
   );
