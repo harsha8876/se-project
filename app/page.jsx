@@ -19,10 +19,13 @@ import {
 import BlurText from "@/components/ui/BlurText";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import DarkVeil from "@/components/ui/DarkVeil";
+import Searchbar from "@/components/Searchbar";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
+
 
   return (
     <div className="relative min-h-screen bg-[#F5F5F5]">
@@ -35,6 +38,7 @@ export default function Home() {
                 AutoMarket
               </span>
             </div>
+
 
             <nav className="hidden lg:flex items-center space-x-8">
               <a
@@ -166,9 +170,9 @@ export default function Home() {
         </div>
 
         {/* Gradient overlay for seamless blending */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#30475E]/50 to-[#30475E]/80 z-1"></div>
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-[#30475E]/50 to-[#30475E]/80"></div>
 
-        <div className="flex flex-col items-center justify-center relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full text-center">
+        <div className="flex flex-col items-center justify-center relative z-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full text-center">
           <div className="mb-8 sm:mb-12">
             <BlurText
               text="Find your perfect car"
@@ -182,6 +186,12 @@ export default function Home() {
             </p>
           </div>
         </div>
+
+        <div className="flex justify-center relative z-20 w-full">
+          <div className="w-full max-w-2xl">
+            <Searchbar />
+          </div>
+        </div> 
       </section>
     </div>
   );
