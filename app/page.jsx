@@ -18,8 +18,6 @@ import {
   Award,
   Users,
   TrendingUp,
-
-
 } from "lucide-react";
 import BlurText from "@/components/ui/BlurText";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
@@ -56,127 +54,7 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-[#F5F5F5]">
-      <header className="relative z-20 bg-white bg-opacity-80 backdrop-blur-md shadow-sm sticky top-0">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Car className="w-8 h-8 text-[#30475E] mr-2" />
-              <span className="text-xl sm:text-2xl font-bold text-[#30475E]">
-                AutoMarket
-              </span>
-            </div>
-
-            <nav className="hidden lg:flex items-center space-x-8">
-              <a
-                href="#"
-                className="text-[#121212] hover:text-[#30475E] transition-colors font-medium"
-              >
-                Browse Cars
-              </a>
-              <a
-                href="#"
-                className="text-[#121212] hover:text-[#30475E] transition-colors font-medium"
-              >
-                About Us
-              </a>
-              <Link href="/finance" className="text-[#121212] hover:text-[#30475E] transition-colors font-medium">
-                Finance
-              </Link>
-              <a
-                href="#services"
-                className="text-[#121212] hover:text-[#30475E] transition-colors font-medium"
-              >
-                Services
-              </a>
-              <SignInButton>
-                <button className="text-[#30475E] hover:text-[#121212] transition-colors font-medium">
-                  Login
-                </button>
-              </SignInButton>
-              <SignUpButton>
-                <button className="bg-[#30475E] text-white px-4 py-2 rounded-lg hover:bg-[#121212] transition-all duration-300 transform hover:scale-105">
-                  Sign up
-                </button>
-              </SignUpButton>
-            </nav>
-
-            <button
-              className="lg:hidden text-[#30475E] p-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-30 bg-white bg-opacity-95 backdrop-blur-md lg:hidden">
-          <div className="flex flex-col h-full">
-            {/* Mobile Header */}
-            <div className="flex justify-between items-center p-4 border-b border-gray-200">
-              <div className="flex items-center">
-                <Car className="w-8 h-8 text-[#30475E] mr-2" />
-                <span className="text-xl font-bold text-[#30475E]">
-                  AutoMarket
-                </span>
-              </div>
-              <button
-                className="text-[#30475E] p-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Mobile Navigation */}
-            <nav className="flex flex-col flex-1 px-4 py-8 space-y-6">
-              <a
-                href="#"
-                className="text-[#121212] hover:text-[#30475E] transition-colors font-medium text-lg py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Buy Cars
-              </a>
-              <a
-                href="#"
-                className="text-[#121212] hover:text-[#30475E] transition-colors font-medium text-lg py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sell Cars
-              </a>
-              <a
-                href="#"
-                className="text-[#121212] hover:text-[#30475E] transition-colors font-medium text-lg py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Finance
-              </a>
-              <a
-                href="#services"
-                className="text-[#121212] hover:text-[#30475E] transition-colors font-medium text-lg py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Services
-              </a>
-
-              <div className="flex flex-col space-y-4 pt-8 mt-8 border-t border-gray-200">
-                <SignInButton>
-                  <button className="w-full text-[#30475E] hover:text-[#121212] transition-colors font-medium text-lg py-3 border border-[#30475E] rounded-lg">
-                    Login
-                  </button>
-                </SignInButton>
-                <SignUpButton>
-                  <button className="w-full bg-[#30475E] text-white py-3 rounded-lg hover:bg-[#121212] transition-all duration-300 font-medium">
-                    Sign up
-                  </button>
-                </SignUpButton>
-              </div>
-            </nav>
-          </div>
-        </div>
-      )}
+      
 
       {/* Hero Section with Dark Veil */}
       <section className="relative bg-gradient-to-b from-[#30475E] via-[#2a3f5a] to-[#243652] text-white py-16 sm:py-20 lg:py-24 overflow-hidden">
@@ -334,7 +212,117 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Newsletter Section */}
+
+
+           { /* About Us Section */}
+            <section className="py-16 bg-white" id="about">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-16">
+                  <h2 className="text-3xl md:text-4xl font-bold text-[#121212] mb-4">About AutoMarket</h2>
+                  <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
+                    Founded in 2018, AutoMarket has revolutionized the way Indians buy and sell cars. We're on a mission to make car ownership accessible, transparent, and hassle-free for everyone.
+                  </p>
+                </div>
+              </div>
+            
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+            <div className="pl-4">
+              <h3 className="text-2xl md:text-3xl font-bold text-[#121212] mb-6">Our Story</h3>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                What started as a simple idea to help people find reliable used cars has grown into India's largest automotive marketplace. We recognized the challenges faced by car buyers and sellers - lack of transparency, complicated processes, and trust issues.
+              </p>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Today, we've facilitated over 50,000 car transactions, helping families across 25+ cities find their perfect vehicle. Our technology-driven approach ensures every car is thoroughly inspected, fairly priced, and comes with complete transparency.
+              </p>
+              <div className="flex items-center space-x-6">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-[#30475E]">6+</div>
+                  <div className="text-gray-600 text-sm">Years Experience</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-[#30475E]">25+</div>
+                  <div className="text-gray-600 text-sm">Cities</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-[#30475E]">1M+</div>
+                  <div className="text-gray-600 text-sm">Happy Customers</div>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <img 
+                src="#" 
+                alt="AutoMarket team"
+                className="w-full h-96 object-cover rounded-2xl shadow-lg"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+            </div>
+          </div>
+
+          {/* Mission & Vision */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="bg-[#F5F5F5] rounded-2xl p-8 text-center hover:shadow-lg transition-all duration-300">
+              <div className="w-16 h-16 bg-[#30475E] text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <Star className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-[#121212] mb-4">Our Mission</h3>
+              <p className="text-gray-600 leading-relaxed">
+                To democratize car ownership in India by providing a transparent, reliable, and customer-centric platform that makes buying and selling cars simple, safe, and affordable for everyone.
+              </p>
+            </div>
+            <div className="bg-[#F5F5F5] rounded-2xl p-8 text-center hover:shadow-lg transition-all duration-300">
+              <div className="w-16 h-16 bg-[#30475E] text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <TrendingUp className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-[#121212] mb-4">Our Vision</h3>
+              <p className="text-gray-600 leading-relaxed">
+                To become India's most trusted automotive ecosystem, where every car transaction is transparent, every customer is satisfied, and car ownership dreams become reality for millions of families.
+              </p>
+            </div>
+          </div>
+
+          {/* Core Values */}
+          <div className="mb-16">
+            <div className="text-center mb-12">
+              <h3 className="text-2xl md:text-3xl font-bold text-[#121212] mb-4">Our Core Values</h3>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                These values guide everything we do and shape our commitment to customers
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="text-center group">
+                <div className="w-16 h-16 bg-[#30475E] text-white rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-[#121212] transition-colors duration-300">
+                  <Shield className="w-8 h-8" />
+                </div>
+                <h4 className="text-lg font-bold text-[#121212] mb-2">Trust</h4>
+                <p className="text-gray-600 text-sm">Building lasting relationships through transparency and reliability</p>
+              </div>
+              <div className="text-center group">
+                <div className="w-16 h-16 bg-[#30475E] text-white rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-[#121212] transition-colors duration-300">
+                  <CheckCircle className="w-8 h-8" />
+                </div>
+                <h4 className="text-lg font-bold text-[#121212] mb-2">Quality</h4>
+                <p className="text-gray-600 text-sm">Maintaining the highest standards in every car and service</p>
+              </div>
+              <div className="text-center group">
+                <div className="w-16 h-16 bg-[#30475E] text-white rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-[#121212] transition-colors duration-300">
+                  <Users className="w-8 h-8" />
+                </div>
+                <h4 className="text-lg font-bold text-[#121212] mb-2">Customer First</h4>
+                <p className="text-gray-600 text-sm">Putting customer needs at the center of everything we do</p>
+              </div>
+              <div className="text-center group">
+                <div className="w-16 h-16 bg-[#30475E] text-white rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-[#121212] transition-colors duration-300">
+                  <Award className="w-8 h-8" />
+                </div>
+                <h4 className="text-lg font-bold text-[#121212] mb-2">Excellence</h4>
+                <p className="text-gray-600 text-sm">Continuously improving and innovating for better experiences</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+              {/* Newsletter Section */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-[#121212] mb-4">Stay Updated</h2>
@@ -345,14 +333,19 @@ export default function Home() {
             <input 
               type="email" 
               placeholder="Enter your email address"
+              aria-label="Email address"
               className="flex-1 px-6 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30475E] focus:border-transparent text-[#121212]"
             />
-            <button className="bg-[#30475E] text-white px-8 py-4 rounded-lg hover:bg-[#121212] transition-all duration-300 transform hover:scale-105 font-medium whitespace-nowrap">
+            <button
+              className="bg-[#30475E] text-white px-8 py-4 rounded-lg hover:bg-[#121212] transition-all duration-300 transform hover:scale-105 font-medium whitespace-nowrap"
+              aria-label="Subscribe to newsletter"
+            >
               Subscribe Now
             </button>
           </div>
         </div>
       </section>
+
 
     </div>
   );
