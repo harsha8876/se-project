@@ -28,7 +28,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 import Searchbar from "@/components/Searchbar";
-import Header from "@/components/Header";
+// import Header from "@/components/Header";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,9 +56,9 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-[#F5F5F5]">
       
-      <div className="z-35 w-full inset-0">
+      {/* <div className="z-35 w-full inset-0">
           <Header/>
-      </div>
+      </div> */}
       
       {/* Hero Section with Dark Veil */}
       <section className="relative bg-gradient-to-b from-[#30475E] via-[#2a3f5a] to-[#243652] text-white py-16 sm:py-20 lg:py-24 overflow-hidden">
