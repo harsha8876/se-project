@@ -318,7 +318,7 @@ const Header = async ({ isAdminPage = false }) => {
               )}
             </>
           )}
-
+          
           {/* Client-only Clerk UI */}
           <AuthButtons isAdminPage={isAdminPage} user={user} />
         </div>
