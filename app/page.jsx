@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Search,
   Car,
@@ -14,10 +14,10 @@ import {
   MapPin,
   Menu,
   X,
-  ChevronRight,
   Award,
   Users,
   TrendingUp,
+  ChevronDown,
 } from "lucide-react";
 import BlurText from "@/components/ui/BlurText";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
@@ -52,6 +52,24 @@ export default function Home() {
       features: ["Low Interest Rates", "Easy Approval", "Custom Plans"],
     },
   ];
+const [visibleBrands, setVisibleBrands] = useState(5);
+  const [brandsPerClick, setBrandsPerClick] = useState(5);
+
+  useEffect(() => {
+    const updateBrandsPerClick = () => {
+      if (window.innerWidth < 640) {
+        setBrandsPerClick(2); // Mobile
+      } else if (window.innerWidth < 1024) {
+        setBrandsPerClick(3); // Tablet
+      } else {
+        setBrandsPerClick(5); // Desktop
+      }
+    };
+
+    updateBrandsPerClick();
+    window.addEventListener("resize", updateBrandsPerClick);
+    return () => window.removeEventListener("resize", updateBrandsPerClick);
+  }, []);
 
   return (
     <div className="relative min-h-screen bg-[#F5F5F5]">
@@ -100,19 +118,16 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#30475E]/50 to-[#30475E]/80 z-10"></div>
 
       </section>
-      {/*brand*/}
+      {/* Browse by Brand */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold">Browse by Brand</h2>
-            <Button variant="ghost" className="flex items-center" asChild>
-              <Link href="/cars">
-                View All <ChevronRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
           </div>
+
+          {/* Brand Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {carMakes.map((make) => (
+            {carMakes.slice(0, visibleBrands).map((make) => (
               <Link
                 key={make.name}
                 href={`/make/${make.name.toLowerCase()}`}
@@ -120,9 +135,7 @@ export default function Home() {
               >
                 <div className="h-16 w-auto mx-auto mb-2 relative">
                   <Image
-                    src={
-                      make.imageUrl || `/make/${make.name.toLowerCase()}.webp`
-                    }
+                    src={make.imageUrl || `/make/${make.name.toLowerCase()}.webp`}
                     alt={make.name}
                     fill
                     style={{ objectFit: "contain" }}
@@ -132,8 +145,22 @@ export default function Home() {
               </Link>
             ))}
           </div>
+
+          {/* View More Button */}
+          {visibleBrands < carMakes.length && (
+            <div className="flex justify-center mt-8">
+              <Button
+                onClick={() => setVisibleBrands(visibleBrands + brandsPerClick)}
+                className="bg-primary-600 hover:bg-blue-300 cursor-pointer text-black px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 transform hover:scale-105 font-medium"
+              >
+                View More <ChevronDown className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
         </div>
-      </section> 
+      </section>
+
+
 
       {/* Services */}
       <section className="py-16 bg-[#F5F5F5]" id="services">
