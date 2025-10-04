@@ -43,7 +43,7 @@ export default function Home() {
     },
     {
       title: "Car Selling Assistance",
-      description: "Sell your car quickly and at the best price.",
+      description: "Sell your car quickly and at the best possible price.",
       features: ["Quick Process", "Fair Pricing", "Wide Reach"],
     },
     {

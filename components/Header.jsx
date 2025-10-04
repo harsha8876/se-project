@@ -276,16 +276,14 @@ const Header = async ({ isAdminPage = false }) => {
           <span className="text-xl sm:text-2xl font-bold text-[#30475E]">
             AutoMarket
           </span>
-          {isAdminPage && (
-            <span className="ml-2 text-xs font-extralight">admin</span>
-          )}
         </Link>
 
         {/* Server-side links */}
         <div className="flex items-center space-x-4">
           {isAdminPage ? (
             <Link href="/">
-              <button className="flex items-center gap-2 border px-3 py-1 rounded-md">
+              <button className="flex items-center gap-2 border px-3 py-1 rounded-md cursor-pointer 
+                                hover:bg-gray-100 hover:border-gray-400 transition-colors">
                 <ArrowLeft size={18} />
                 <span>Back to App</span>
               </button>
@@ -302,7 +300,7 @@ const Header = async ({ isAdminPage = false }) => {
               )}
               {user && (
                 <Link href="/saved-cars">
-                  <button className="flex items-center gap-2 bg-[#30475E] text-white px-3 py-1 rounded-md hover:bg-[#121212]">
+                  <button className="flex items-center gap-2 bg-[#30475E] text-white px-3 py-1 rounded-md hover:bg-[#121212] cursor-pointer">
                     <Heart size={18} />
                     <span className="hidden md:inline">Saved Cars</span>
                   </button>
@@ -310,7 +308,8 @@ const Header = async ({ isAdminPage = false }) => {
               )}
               {isAdmin && (
                 <Link href="/admin">
-                  <button className="flex items-center gap-2 border px-3 py-1 rounded-md">
+                  <button className="flex items-center gap-2 border px-3 py-1 rounded-md cursor-pointer 
+                                hover:bg-gray-100 hover:border-gray-400 transition-colors">
                     <Layout size={18} />
                     <span className="hidden md:inline">Admin Portal</span>
                   </button>
