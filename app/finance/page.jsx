@@ -2,7 +2,7 @@
 
 import React from "react";
 import { FinanceSection } from "@/components/FinanceSection";
-import { LoanCalculator } from "@/components/LoanCalculator";
+
 
 export default function FinancePage() {
   return (

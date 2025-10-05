@@ -1,13 +1,14 @@
 "use client";
 
-import React from "react";
 import { ArrowLeft, Gauge, Fuel, Star, Users, Calendar, Heart } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CarDetailPage() {
   const brand = "Tesla";
   const id = "1";
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const router = useRouter();
 
   const cars = [
     {
@@ -52,6 +53,11 @@ export default function CarDetailPage() {
       </div>
     );
   }
+
+  const handleGetBestOffer = () => {
+    
+    router.push(`/finance?carName=${encodeURIComponent(car.name)}&price=${car.price}`);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -168,7 +174,10 @@ export default function CarDetailPage() {
 
               {/* CTA Buttons */}
               <div className="space-y-3">
-                <button className="w-full py-4 rounded-2xl bg-[#30475E] text-white font-semibold hover:bg-[#223346] transition-all hover:shadow-xl transform hover:-translate-y-0.5">
+                <button 
+                  onClick={handleGetBestOffer}
+                  className="w-full py-4 rounded-2xl bg-[#30475E] text-white font-semibold hover:bg-[#223346] transition-all hover:shadow-xl transform hover:-translate-y-0.5"
+                >
                   Get Best Offer
                 </button>
                 <button className="w-full py-4 rounded-2xl border-2 border-[#30475E] text-[#30475E] font-semibold hover:bg-[#30475E] hover:text-white transition-all">
