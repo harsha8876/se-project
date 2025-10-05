@@ -1,8 +1,13 @@
-import { ArrowLeft, Gauge, Fuel, Star, Users, Calendar } from "lucide-react";
+"use client";
+
+import React from "react";
+import { ArrowLeft, Gauge, Fuel, Star, Users, Calendar, Heart } from "lucide-react";
+import { useState } from "react";
 
 export default function CarDetailPage() {
   const brand = "Tesla";
   const id = "1";
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
   const cars = [
     {
@@ -83,6 +88,21 @@ export default function CarDetailPage() {
                     {car.status}
                   </span>
                 </div>
+                
+                {/* Wishlist Button */}
+                <button 
+                  onClick={() => setIsWishlisted(!isWishlisted)}
+                  className="absolute top-6 left-6 p-3 bg-white rounded-full shadow-lg hover:scale-110 transition-transform"
+                  aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                >
+                  <Heart 
+                    className={`w-6 h-6 transition-colors ${
+                      isWishlisted 
+                        ? "fill-red-500 text-red-500" 
+                        : "text-gray-400 hover:text-red-500"
+                    }`} 
+                  />
+                </button>
               </div>
             </div>
 
@@ -153,6 +173,17 @@ export default function CarDetailPage() {
                 </button>
                 <button className="w-full py-4 rounded-2xl border-2 border-[#30475E] text-[#30475E] font-semibold hover:bg-[#30475E] hover:text-white transition-all">
                   Schedule Test Drive
+                </button>
+                <button 
+                  onClick={() => setIsWishlisted(!isWishlisted)}
+                  className={`w-full py-4 rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 ${
+                    isWishlisted
+                      ? "bg-red-50 border-2 border-red-500 text-red-600 hover:bg-red-100"
+                      : "bg-gray-50 border-2 border-gray-300 text-gray-700 hover:border-red-500 hover:text-red-600"
+                  }`}
+                >
+                  <Heart className={`w-5 h-5 ${isWishlisted ? "fill-current" : ""}`} />
+                  {isWishlisted ? "Saved to Wishlist" : "Add to Wishlist"}
                 </button>
               </div>
 
