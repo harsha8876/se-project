@@ -38,7 +38,7 @@ function CarCard({ car }) {
             <span className="ml-1 text-gray-500">/5</span>
           </div>
           <Link
-            href={`/cars/${car.id}`}
+            href={`/make/${car.brand}/cars/${car.id}`}
             className="text-sm font-medium text-[#30475E] hover:underline"
           >
             View Details
