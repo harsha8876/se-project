@@ -1,8 +1,57 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Star } from "lucide-react"; // optional rating icon
 
-export default async function BrandPage({ params }) {
-  const { brand } = await params; // ✅ unwrap the promise
+// ✅ Reusable Car Card
+function CarCard({ car }) {
+  return (
+    <div className="flex gap-4 p-4 rounded-2xl shadow-md border border-gray-200 bg-white hover:shadow-lg transition">
+      {/* Car Image */}
+      <div className="flex-shrink-0">
+        <img
+          src={car.image}
+          alt={car.name}
+          width={150}
+          height={100}
+          className="rounded-lg object-cover"
+        />
+      </div>
+
+      {/* Car Info */}
+      <div className="flex flex-col justify-between flex-1">
+        <div>
+          <h2 className="text-lg font-semibold text-[#30475E]">{car.name}</h2>
+          <p className="text-sm text-gray-600">
+            {car.year} | {car.status}
+          </p>
+          {/* ✅ Fixed locale for deterministic SSR */}
+          <p className="text-base font-bold text-[#30475E]">
+            ${car.price.toLocaleString("en-US")}
+          </p>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="flex justify-between items-center mt-2">
+          <div className="flex items-center text-sm text-gray-700">
+            <Star className="w-4 h-4 text-green-600 fill-green-600 mr-1" />
+            <span className="font-semibold">4.5</span>
+            <span className="ml-1 text-gray-500">/5</span>
+          </div>
+          <Link
+            href={`/cars/${car.id}`}
+            className="text-sm font-medium text-[#30475E] hover:underline"
+          >
+            View Details
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function BrandPage({ params }) {
+  // ✅ removed "await" since params is not a Promise
+  const { brand } = params;
 
   const cars = [
     {
@@ -35,7 +84,13 @@ export default async function BrandPage({ params }) {
           Explore our latest selection of {brand} cars available in our marketplace.
         </p>
       </div>
-      {/* grid here... */}
+
+      {/* Grid for cars */}
+      <div className="max-w-4xl mx-auto grid gap-6">
+        {cars.map((car) => (
+          <CarCard key={car.id} car={car} />
+        ))}
+      </div>
     </div>
   );
 }

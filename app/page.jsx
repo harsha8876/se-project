@@ -37,14 +37,15 @@ export default function Home() {
   // Define the services array
   const services = [
     {
-      title: "Car Buying Assistance",
+      title: "Buying/Selling Cars",
       description: "Get expert advice on buying your next car.",
       features: ["Expert Guidance", "Best Deals", "Wide Selection"],
     },
     {
-      title: "Car Selling Assistance",
-      description: "Sell your car quickly and at the best possible price.",
-      features: ["Quick Process", "Fair Pricing", "Wide Reach"],
+      title: "Book a Test Drive",
+      description: "Experience your dream car before you buy.",
+      features: ["Easy Booking", "Flexible Timing", "Wide Range"],
+      
     },
     {
       title: "Car Financing",
