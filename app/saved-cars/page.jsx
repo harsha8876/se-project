@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Heart } from "lucide-react";
 import Link from "next/link";
-import CarCard from "@/components/car-card"; // Import the CarCard component
+import { CarCard } from "@/components/car-card"; // Import the CarCard component
 
 export default function SavedCarsPage() {
   const [savedCars, setSavedCars] = useState([]);
