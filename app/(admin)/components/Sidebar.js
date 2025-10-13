@@ -19,7 +19,6 @@ export default function Sidebar() {
 
   return (
     <div className="fixed inset-y-0 left-0 z-50 w-56 bg-[#30485e] text-white shadow-lg hidden md:flex flex-col">
-      {/* Logo Section */}
       <div className="p-5 border-b border-[#22394d]">
         <div className="flex items-center space-x-3">
           <LayoutDashboard className="h-7 w-7 text-white" />
