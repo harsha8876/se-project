@@ -1,7 +1,10 @@
 import React from 'react'
 import { AddCarForm } from '../components/add-car-form';
 
-export const dynamic = 'force-dynamic';
+export const metadata = {
+    title: "Add new car",
+    description : "Add a new car to the Marketplace"
+};
 
 const AddCarpage = () => {
   return (
