@@ -18,37 +18,43 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="fixed inset-y-0 left-0 z-50 w-56 bg-blue-800 text-white shadow-lg hidden md:flex flex-col">
-      {/* Logo */}
-      <div className="p-5 border-b border-blue-700">
+    <div className="fixed inset-y-0 left-0 z-50 w-56 bg-[#30485e] text-white shadow-lg hidden md:flex flex-col">
+      {/* Logo Section */}
+      <div className="p-5 border-b border-[#22394d]">
         <div className="flex items-center space-x-3">
-          <span className="material-symbols-outlined text-3xl">dashboard</span>
+          <LayoutDashboard className="h-7 w-7 text-white" />
         </div>
       </div>
 
-      {/* Navigation */}
+      {/* Navigation Menu */}
       <nav className="flex-1 p-3">
-        <p className="text-blue-300 px-3 text-xs font-medium mb-2 uppercase">Main Menu</p>
+        <p className="text-gray-300 px-3 text-xs font-medium mb-3 uppercase tracking-wide">
+          Main Menu
+        </p>
+
         {routes.map((route) => (
           <Link
             key={route.href}
             href={route.href}
             className={cn(
-              "flex items-center space-x-3 text-white p-3 rounded-lg mb-1 transition-all duration-200",
-              pathname === route.href ? "bg-blue-700" : "hover:bg-blue-600"
+              // ✅ unified button look
+              "flex items-center space-x-3 rounded-md px-4 py-2.5 text-sm font-medium transition-all duration-200 cursor-pointer",
+              pathname === route.href
+                ? "bg-[#121212] text-white shadow-sm"
+                : "bg-[#30485e] hover:bg-[#121212] hover:shadow-sm"
             )}
           >
-            <route.icon className="h-5 w-5" />
+            <route.icon className="h-5 w-5 shrink-0" />
             <span>{route.label}</span>
           </Link>
         ))}
       </nav>
 
-      {/* Logout */}
-      <div className="mt-auto p-5 border-t border-blue-700">
+      {/* Logout Button */}
+      <div className="mt-auto p-5 border-t border-[#22394d]">
         <SignOutButton>
-          <button className="flex items-center space-x-3 text-white p-3 rounded-lg hover:bg-blue-700 transition-all duration-200 w-full">
-            <LogOut className="h-5 w-5" />
+          <button className="flex items-center space-x-3 w-full rounded-md px-4 py-2.5 text-sm font-medium bg-[#30485e] hover:bg-[#121212] transition-all duration-200 cursor-pointer">
+            <LogOut className="h-5 w-5 shrink-0" />
             <span>Logout</span>
           </button>
         </SignOutButton>
