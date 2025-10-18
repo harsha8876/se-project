@@ -1,69 +1,110 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "./ui/input";
 import { Camera, Upload } from "lucide-react";
 import { Button } from "./ui/button";
-import {useDropzone} from 'react-dropzone'
+import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { processImageSearch } from "@/actions/home"; // 🧩 from 2nd code
+import useFetch from "@/hooks/use-fetch"; // 🧩 from 2nd code
 
 const Searchbar = () => {
   const [searchterm, setsearchterm] = useState("");
-  const [isimagesearchactive,setisimagesearchactive] = useState(false);
-  const[imagepreview,setimagepreview] = useState("");
-  const[searchimage,setsearchimage] = useState(null);
-  const[isuploading,setisuploading] = useState(false);
-
-
-  const onDrop = (acceptedFiles) => {
-  const file = acceptedFiles[0];
-
-  if (file) {
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("Image size must be less than 5MB");
-      return;
-    }
-
-    setisuploading(true);
-    setsearchimage(file);
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setimagepreview(reader.result);
-      setisuploading(false);
-      toast.success("Image uploaded successfully");
-    };
-    reader.onerror = () => {
-      setisuploading(false);
-      toast.error("Failed to read the image");
-    };
-
-    reader.readAsDataURL(file);
-  }
-};
+  const [isimagesearchactive, setisimagesearchactive] = useState(false);
+  const [imagepreview, setimagepreview] = useState("");
+  const [searchimage, setsearchimage] = useState(null);
+  const [isuploading, setisuploading] = useState(false);
 
   const router = useRouter();
+
+  // 🧠 Integrate useFetch hook for AI image processing
+  const {
+    loading: isProcessing,
+    fn: processImageFn,
+    data: processResult,
+    error: processError,
+  } = useFetch(processImageSearch);
+
+  // ✅ Handle image analysis results
+  useEffect(() => {
+    if (processResult?.success) {
+      const params = new URLSearchParams();
+
+      if (processResult.data.make) params.set("make", processResult.data.make);
+      if (processResult.data.bodyType)
+        params.set("bodyType", processResult.data.bodyType);
+      if (processResult.data.color)
+        params.set("color", processResult.data.color);
+
+      router.push(`/cars?${params.toString()}`);
+    }
+  }, [processResult, router]);
+
+  // ❌ Handle AI errors
+  useEffect(() => {
+    if (processError) {
+      toast.error(
+        "Failed to analyze image: " + (processError.message || "Unknown error")
+      );
+    }
+  }, [processError]);
+
+  // 🖼️ Handle Image Upload
+  const onDrop = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image size must be less than 5MB");
+        return;
+      }
+
+      setisuploading(true);
+      setsearchimage(file);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setimagepreview(reader.result);
+        setisuploading(false);
+        toast.success("Image uploaded successfully");
+      };
+      reader.onerror = () => {
+        setisuploading(false);
+        toast.error("Failed to read the image");
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
 
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
     useDropzone({
       onDrop,
       accept: { "image/*": [".jpeg", ".jpg", ".png"] },
+      maxFiles: 1,
     });
-  const handleTextSubmit = async(e) => {
-  e.preventDefault();
-    if(!searchterm.trim()){
+
+  // 🔍 Handle text-based search
+  const handleTextSubmit = async (e) => {
+    e.preventDefault();
+    if (!searchterm.trim()) {
       toast.error("Please enter a search term");
       return;
     }
-    router.push(`/cars?search=${encodeURIComponent(searchterm)}`)
+    router.push(`/cars?search=${encodeURIComponent(searchterm)}`);
   };
-  const handleimagesearch = async(e) => {
+
+  // 🧠 Handle AI Image Search
+  const handleimagesearch = async (e) => {
     e.preventDefault();
-    if(!searchimage){
+    if (!searchimage) {
       toast.error("Please upload an image first");
       return;
     }
+
+    await processImageFn(searchimage); // 🔥 triggers the AI search
   };
 
   return (
@@ -77,20 +118,19 @@ const Searchbar = () => {
             onChange={(e) => setsearchterm(e.target.value)}
             className="pl-15 pr-15 py-6 w-full rounded-full border border-gray-300 bg-white/95 backdrop-blur-sm text-black"
           />
-        
 
           <div className="absolute right-[100px]">
             <Camera
-            size={36}
-            onClick={()=>setisimagesearchactive(!isimagesearchactive)}
-            className={`cursor-pointer rounded-xl p-2 z-10 transition-colors ${
-              isimagesearchactive
-                ? "bg-black text-white"
-                : "bg-gray-400 text-black"
-            }`}
-            
+              size={36}
+              onClick={() => setisimagesearchactive(!isimagesearchactive)}
+              className={`cursor-pointer rounded-xl p-2 z-10 transition-colors ${
+                isimagesearchactive
+                  ? "bg-black text-white"
+                  : "bg-gray-400 text-black"
+              }`}
             />
           </div>
+
           <Button type="submit" className="absolute right-2 rounded-full z-10">
             Search
           </Button>
@@ -100,7 +140,7 @@ const Searchbar = () => {
       {isimagesearchactive && (
         <div className="mt-4">
           <form onSubmit={handleimagesearch}>
-            <div className="border-2 border-solid broder-gray-300 rounded-3xl p-6">
+            <div className="border-2 border-solid border-gray-300 rounded-3xl p-6">
               {imagepreview ? (
                 <div className="flex flex-col items-center">
                   <img
@@ -108,7 +148,7 @@ const Searchbar = () => {
                     alt="preview"
                     className="w-40 h-40 object-cover rounded-lg mb-4 border"
                   />
-                   <Button
+                  <Button
                     variant="outline"
                     onClick={() => {
                       setsearchimage(null);
@@ -146,10 +186,12 @@ const Searchbar = () => {
               <Button
                 type="submit"
                 className="w-full mt-3"
-                disabled={isuploading }
+                disabled={isuploading || isProcessing}
               >
                 {isuploading
                   ? "Uploading..."
+                  : isProcessing
+                  ? "Analyzing image..."
                   : "Search with this Image"}
               </Button>
             )}
