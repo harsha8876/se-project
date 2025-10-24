@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Search,
   Car,
@@ -18,6 +18,7 @@ import {
   Users,
   TrendingUp,
   ChevronDown,
+  ChevronRight
 } from "lucide-react";
 import BlurText from "@/components/ui/BlurText";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
@@ -26,15 +27,51 @@ import Link from "next/link";
 import { bodyTypes, carMakes, faqItems } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-
+import { getFeaturedCars } from "@/actions/home";
 import Searchbar from "@/components/Searchbar";
-// import Header from "@/components/Header";
+import { CarCard } from "@/components/car-card"; // ✅ Import CarCard
 
 export default function Home() {
+  const [featuredCars, setFeaturedCars] = useState([]); // ✅ Declare featuredCars
+  const [isLoading, setIsLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
-  // Define the services array
+
+  // ✅ Fetch featured cars client-side
+  useEffect(() => {
+    async function fetchCars() {
+      try {
+        const cars = await getFeaturedCars();
+        setFeaturedCars(cars);
+      } catch (error) {
+        console.error("Error fetching featured cars:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchCars();
+  }, []);
+
+  const [visibleBrands, setVisibleBrands] = useState(5);
+  const [brandsPerClick, setBrandsPerClick] = useState(5);
+
+  useEffect(() => {
+    const updateBrandsPerClick = () => {
+      if (window.innerWidth < 640) {
+        setBrandsPerClick(2);
+      } else if (window.innerWidth < 1024) {
+        setBrandsPerClick(3);
+      } else {
+        setBrandsPerClick(5);
+      }
+    };
+    updateBrandsPerClick();
+    window.addEventListener("resize", updateBrandsPerClick);
+    return () => window.removeEventListener("resize", updateBrandsPerClick);
+  }, []);
+
+  // ✅ Services array
   const services = [
     {
       title: "Buying/Selling Cars",
@@ -45,7 +82,6 @@ export default function Home() {
       title: "Book a Test Drive",
       description: "Experience your dream car before you buy.",
       features: ["Easy Booking", "Flexible Timing", "Wide Range"],
-      
     },
     {
       title: "Car Financing",
@@ -53,25 +89,7 @@ export default function Home() {
       features: ["Low Interest Rates", "Easy Approval", "Custom Plans"],
     },
   ];
-const [visibleBrands, setVisibleBrands] = useState(5);
-  const [brandsPerClick, setBrandsPerClick] = useState(5);
-
-  useEffect(() => {
-    const updateBrandsPerClick = () => {
-      if (window.innerWidth < 640) {
-        setBrandsPerClick(2); // Mobile
-      } else if (window.innerWidth < 1024) {
-        setBrandsPerClick(3); // Tablet
-      } else {
-        setBrandsPerClick(5); // Desktop
-      }
-    };
-
-    updateBrandsPerClick();
-    window.addEventListener("resize", updateBrandsPerClick);
-    return () => window.removeEventListener("resize", updateBrandsPerClick);
-  }, []);
-
+  
   return (
     <div className="relative min-h-screen bg-[#F5F5F5]">
       
@@ -119,6 +137,33 @@ const [visibleBrands, setVisibleBrands] = useState(5);
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#30475E]/50 to-[#30475E]/80 z-10"></div>
 
       </section>
+
+       {/* ✅ Featured Cars Section Fixed */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-2xl font-bold">Featured Cars</h2>
+            <Button variant="ghost" className="flex items-center" asChild>
+               <Link href="/cars">
+                View All <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+
+          {isLoading ? (
+            <p className="text-gray-500 text-center">Loading cars...</p>
+          ) : featuredCars.length === 0 ? (
+            <p className="text-gray-500 text-center">No featured cars found.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featuredCars.map((car) => (
+                <CarCard key={car.id} car={car} />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Browse by Brand */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -131,7 +176,7 @@ const [visibleBrands, setVisibleBrands] = useState(5);
             {carMakes.slice(0, visibleBrands).map((make) => (
               <Link
                 key={make.name}
-                href={`/make/${make.name.toLowerCase()}`}
+                 href={`/cars?make=${make.name}`}
                 className="bg-white rounded-lg shadow p-4 text-center hover:shadow-md transition cursor-pointer"
               >
                 <div className="h-16 w-auto mx-auto mb-2 relative">

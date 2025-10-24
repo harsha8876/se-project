@@ -299,12 +299,12 @@ const Header = async ({ isAdminPage = false }) => {
                 </Link>
               )}
               {user && (
-                <Link href="/saved-cars">
+                <a href="/saved-cars">
                   <button className="flex items-center gap-2 bg-[#30475E] text-white px-3 py-1 rounded-md hover:bg-[#121212] cursor-pointer">
                     <Heart size={18} />
                     <span className="hidden md:inline">Saved Cars</span>
                   </button>
-                </Link>
+                </a>
               )}
               {isAdmin && (
                 <Link href="/admin">
