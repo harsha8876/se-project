@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getAdmin } from "@/app/actions/admin";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../_components/Sidebar";
 import Header from "@/components/Header.jsx";
 export default async function AdminLayout({ children }) {
   const admin = await getAdmin();

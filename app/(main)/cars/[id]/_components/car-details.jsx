@@ -29,6 +29,7 @@ import { EmiCalculator } from "./emi-calculator";
 import { toggleSavedCar } from "@/actions/car-listing";
 import useFetch from "@/hooks/use-fetch";
 import { formatCurrency } from "@/lib/helpers";
+import { format } from "date-fns";
 
 export default function CarDetailPage({ car, testDriveInfo }) {
   const router = useRouter();
@@ -279,11 +280,21 @@ export default function CarDetailPage({ car, testDriveInfo }) {
                 <Button
                   onClick={handleBookTestDrive}
                   variant="outline"
-                  className="w-full py-4 rounded-2xl border-2 text-[#30475E] font-semibold hover:bg-[#30475E] hover:text-white"
+                  disabled={!!testDriveInfo?.userTestDrive}
+                  className={`w-full py-4 rounded-2xl border-2 font-semibold transition-all flex items-center justify-center gap-2 ${
+                    testDriveInfo?.userTestDrive
+                      ? "bg-gray-100 text-gray-500 border-gray-300 cursor-not-allowed"
+                      : "text-[#30475E] hover:bg-[#30475E] hover:text-white"
+                  }`}
                 >
-                  Schedule Test Drive
-                </Button>
-
+                  <Calendar className="w-5 h-5" />
+                  {testDriveInfo?.userTestDrive
+                    ? `Booked for ${format(
+                        new Date(testDriveInfo.userTestDrive.bookingDate),
+                        "EEEE, MMMM d, yyyy"
+                      )}`
+                    : "Schedule Test Drive"}
+              </Button>
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button
